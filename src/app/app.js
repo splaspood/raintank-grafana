@@ -11,6 +11,7 @@ define([
   'angular-route',
   'angular-strap',
   'angular-dragdrop',
+  'angular-resource',
   'extend-jquery',
   'bindonce',
 ],
@@ -64,6 +65,7 @@ function (angular, $, _, appLevelRequire, config) {
     'ngRoute',
     '$strap.directives',
     'ngDragDrop',
+    'ngResource',
     'grafana',
     'pasvaz.bindonce'
   ];

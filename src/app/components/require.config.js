@@ -17,6 +17,7 @@ require.config({
     'angular-route':          '../vendor/angular/angular-route',
     'angular-dragdrop':       '../vendor/angular/angular-dragdrop',
     'angular-strap':          '../vendor/angular/angular-strap',
+    'angular-resource':       '../vendor/angular/angular-resource',
     timepicker:               '../vendor/angular/timepicker',
     datepicker:               '../vendor/angular/datepicker',
     bindonce:                 '../vendor/angular/bindonce',
