@@ -1,0 +1,20 @@
+<div body-class>
+  <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <span class="brand"><img src="img/small.png" bs-tooltip="'Grafana'" data-placement="bottom"> Devices</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+  <div class="container-fluid main">
+    <div>
+      <div class="grafana-container container">
+        <div class="panel-container" ng-repeat="device in devices">
+        	<a href="#/dashboard/device/{{device._id}}">{{device.name}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

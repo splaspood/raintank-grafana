@@ -13,4 +13,12 @@ define([
       });
     }
   ]);
+  module.factory('raintankResourceType', ['$resource',
+    function($resource) {
+      return $resource('/resourceTypes/:resourceType', {}, {
+        query: {method:'GET', isArray:false},
+        update: {method: 'PUT'},
+      });
+    }
+  ]);
 });
