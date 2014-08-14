@@ -1,15 +1,16 @@
 <div ng-controller="DashCtrl" body-class>
 
-  <div class="navbar navbar-static-top">
+  <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container-fluid">
         <span class="brand"><img src="img/small.png" bs-tooltip="'Grafana'" data-placement="bottom"> {{dashboard.title}}</span>
+        <div ng-controller='raintankMenuCtrl' ng-init="init()" ng-include="'app/partials/raintank/menu.html'"></div>
         <ul class="nav pull-right" ng-controller='dashLoader' ng-init="init()" ng-include="'app/partials/dashLoaderDevice.html'">
         </ul>
       </div>
     </div>
   </div>
-
+  <div class="navbar"><span class="brand"></span></div> 
   <div class="submenu-controls">
     <div class="submenu-panel" ng-controller="SubmenuCtrl" ng-repeat="pulldown in dashboard.pulldowns | filter:{ enable: true }">
       <div class="submenu-panel-title">

@@ -1,0 +1,4 @@
+define([
+  './device',
+],
+function () {});

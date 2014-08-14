@@ -3,6 +3,6 @@ define([
   './dashboard-from-file',
   './dashboard-from-script',
   './dashboard-default',
-  './dashboard-device',
+  './raintank/all',
 ],
 function () {});

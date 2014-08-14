@@ -14,4 +14,5 @@ define([
   './inspectCtrl',
   './opentsdbTargetCtrl',
   './console-ctrl',
+  './raintank/all',
 ], function () {});

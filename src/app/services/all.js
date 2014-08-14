@@ -11,6 +11,6 @@ define([
   './unsavedChangesSrv',
   './dashboard/dashboardKeyBindings',
   './dashboard/dashboardSrv',
-  './raintank/resource',
+  './raintank/all',
 ],
 function () {});

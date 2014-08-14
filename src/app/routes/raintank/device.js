@@ -41,20 +41,31 @@ function (angular, jquery, _) {
       resourceTypeReq.$promise.then(function() {
         var seenTypes = {};
         $scope.resourceTypes = resourceTypeReq.resourceTypes;
-        _.forEach($scope.resourceTypes, function(resourceType) {
+        _.forEach($scope.resourceTypes.sort(function(a,b) {return b.name.localeCompare(a.name)}), function(resourceType) {
+            console.log("looking for metrics for resource: " + resourceType.name);
             _.forEach($scope.device.metrics, function(metric) {
               if (resourceType._id in seenTypes) return;
               var match = new RegExp(resourceType.match);
               if (match.test(metric.name)) {
-                console.log("matched");
+                console.log("matched: " + metric.name);
                 var panel = _.cloneDeep(resourceType.panel);
                 _.each(panel.targets, function(target) {
                   var interval = parseInt(metric.interval);
                   if (target.function == "derivative") {
                     interval = interval * 2;
                   }
-                  target.interval = ""+ interval+"s";
+                  // we want to only get metrics for this device.
+                  var extra = {
+                    condition_filter:true,
+                    condition_key:"device",
+                    condition_op:"=",
+                    condition_value:"'"+$routeParams.device+"'",
+                    interval: ""+ interval+"s"
+                  }
+                  target = _.assign(target, extra);
+
                 });
+                panel.span=6;
                 panels.push(panel);
                 seenTypes[resourceType._id] = true;
               }
@@ -62,16 +73,16 @@ function (angular, jquery, _) {
         });
         console.log(panels);
         console.log(template);
-        template.then(function(tmpl, status) {
+        template.then(function(resp, status) {
+          var tmpl = resp.data;
           tmpl.title = $scope.device.name;
-          
           var rowSpans = 0;
           var rowCount = 0;
           tmpl.rows = [{
             "title": "",
             "height": "250px",
-            "editable": true,
-            "collapse": false,
+            "editable": false,
+            "collapse": true,
             "panels": []
           }];
           _.forEach(panels, function(panel) {
@@ -82,12 +93,15 @@ function (angular, jquery, _) {
               tmpl.rows.push({
                 "title": "",
                 "height": "250px",
-                "editable": true,
-                "collapse": false,
+                "editable": false,
+                "collapse": true,
                 "panels": []
               });
             }
-            tmpl.rows[rowCount].title += panel.title + " ";
+            if (rowSpans > panel.span ) {
+              tmpl.rows[rowCount].title += " : ";
+            }
+            tmpl.rows[rowCount].title += panel.title; 
             tmpl.rows[rowCount].panels.push(panel);
           });
           console.log(tmpl);
