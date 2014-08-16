@@ -1,4 +1,5 @@
 define([
   './resource',
+  './dashboard'
 ],
 function () {});
