@@ -1,4 +1,50 @@
 define([
-  './device',
+  'angular',
+  'jquery',
+  'lodash',
+  'config',
+  'services/all',
 ],
-function () {});
+function (angular, jquery, _, config) {
+  "use strict";
+
+  var module = angular.module('grafana.routes');
+
+  module.config(function($routeProvider) {
+    $routeProvider
+      .when('/dashboard/device/:device', {
+        templateUrl: 'app/partials/dashboardDevice.html',
+        controller : 'DashFromDeviceProvider',
+      }).when('/dashboard/service/:service', {
+        templateUrl: 'app/partials/dashboardService.html',
+        controller : 'DashFromServiceProvider',
+      }).when('/dashboard/device', {
+        templateUrl: 'app/partials/deviceList.html',
+        controller : 'DeviceListProvider',
+      }).when('/dashboard/service', {
+        templateUrl: 'app/partials/serviceList.html',
+        controller : 'ServiceListProvider',
+      });
+  });
+
+  module.controller('DashFromDeviceProvider', function($scope, $rootScope, $http, $routeParams, alertSrv, $q, raintankDashboard) {
+    console.log('DashFromDeviceProvider');
+    raintankDashboard.device(function(err, dashboard) {
+      if (err) {
+        alertSrv.set('Error',err.message ,'error');
+      } else {
+        $scope.emitAppEvent('setup-dashboard', dashboard);
+      }
+    });
+  });
+  module.controller('DashFromServiceProvider', function($scope, $rootScope, $http, $routeParams, alertSrv, $q, raintankDashboard) {
+    console.log('DashFromDeviceProvider');   
+    raintankDashboard.service(function(err, dashboard) {
+      if (err) {
+        alertSrv.set('Error',err.message ,'error');
+      } else {
+        $scope.emitAppEvent('setup-dashboard', dashboard);
+      }
+    });
+  });
+});

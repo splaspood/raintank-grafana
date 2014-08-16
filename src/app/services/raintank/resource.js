@@ -13,6 +13,14 @@ define([
       });
     }
   ]);
+  module.factory('raintankService', ['$resource',
+    function($resource) {
+      return $resource('/services/:service', {}, {
+        query: {method:'GET', isArray:false},
+        update: {method: 'PUT'},
+      });
+    }
+  ]);
   module.factory('raintankResourceType', ['$resource',
     function($resource) {
       return $resource('/resourceTypes/:resourceType', {}, {

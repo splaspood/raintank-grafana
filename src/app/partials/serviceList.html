@@ -1,0 +1,33 @@
+<div body-class>
+  <div class="navbar navbar-static-top">
+    <div class="navbar-inner">
+      <div class="container-fluid">
+        <span class="brand"><img src="img/small.png" bs-tooltip="'Grafana'" data-placement="bottom"> Services</span>
+        <div ng-controller='raintankMenuCtrl' ng-init="init()" ng-include="'app/partials/raintank/menu.html'"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+  <div class="container-fluid main">
+    <div>
+      <div class="grafana-container container">
+        <div class="panel-container">
+          <span>Services</span>
+          <div class="pull-right">
+            <a ng-click="editService()"><i class="icon-plus"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid main">
+    <div>
+      <div class="grafana-container container">
+        <div class="panel-container" ng-repeat="service in services">
+        	<a href="#/dashboard/service/{{service._id}}">{{service.name}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
