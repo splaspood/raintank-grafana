@@ -16,17 +16,17 @@ function (angular, config, _) {
       title: "test Modal",
     };
     // Create modal (returns a promise since it may have to perform an http request)
-    $scope.modalTest = $modal({template: 'app/partials/raintank/modal.html', persist: true, show: false, backdrop: 'static', scope: $scope});
+    $scope.editModal = $modal({template: 'app/partials/raintank/serviceEditModal.html', persist: true, show: false, backdrop: 'static', scope: $scope});
  
     $scope.editService = function() {
-      $q.when($scope.modalTest).then(function(modalEl) {
+      $q.when($scope.editModal).then(function(modalEl) {
           modalEl.modal('show');
         });
     };
 
   });
-  module.controller('raintankModalCtrl', function($scope, $q ) {
-    console.log('raintankModalCtrl');
+  module.controller('raintankServiceEditCtrl', function($scope, $q ) {
+    console.log('raintankServiceEditCtrl');
     $scope.error = null;
     
     $scope.frequency = [
@@ -47,11 +47,6 @@ function (angular, config, _) {
       console.log('save');
       $scope.services.push({name: "test", _id: "123"});
       $scope.dismiss();
-    }
-    $scope.close = function() {
-      $q.when($scope.modalTest).then(function(modalEl) {
-          modalEl.modal('hide');
-      });
     }
   });
 });

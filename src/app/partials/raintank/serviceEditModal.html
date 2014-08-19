@@ -1,0 +1,110 @@
+<div ng-controller="raintankServiceEditCtrl" class="modal">
+    <form name="serviceEditForm" class="css-form" novalidate>
+        <div class="modal-header">
+            <a class="close" ng-click="cancel()">&times;</a>
+            <h3>{{service._id ? "Edit" : "Add"}} Service</h3>
+        </div>
+        <div class="modal-body">
+            <div class="alert alert-danger" ng-show="error">
+                <button type="button" class="close"  aria-hidden="true" ng-click="dismiss_alert()">&times;</button>
+                {{error}}
+            </div>
+            <div>
+                <div class="col-sm-12">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Name</Label>
+                        <div class="col-sm-9">
+                            <input type="text" ng-model="service.name" placeholder="Name" class="form-control" ng-required="true">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Frequency</label>
+                        <div class="col-sm-9">
+                            <select ng-model="service.frequency" class="form-control" ng-required="true" ng-options="freq.value as freq.label for freq in frequency"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Type</label>
+                        <div class="col-sm-9">
+                            <select ng-model="service.serviceType" class="input-xlarge form-control" ng-options="serviceType._id as serviceType.name for serviceType in serviceTypes" ng-required="true" ng-disabled="service._id" ng-change="changeType()"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="col-sm-2 control-label">Locations</label>
+                            <div class="col-sm-9">
+                                <select ng-model="service.locations" multiple="multiple" class="input-xlarge form-control" ng-options="location._id as location.name for location in locations"></select>
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Enabled</label>
+                        <div class="col-sm-9">
+                            <input type="checkbox" ng-model="service.enabled" class="form-control input-sm">
+                        </div>
+                    </div>
+
+                    <div >
+                        <div class="col-sm-11">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="row">
+                                        <label class="col-sm-2 control-label">Tags</Label>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-11">
+                                            <div ng-repeat="tagId in service.tags">
+                                                <h3 class="col-md-3 col-sm-4">
+                                                    <span class='label label-info'>{{tagsMap[tagId].name}}
+                                                        <a ng-click="removeTag($index)">
+                                                            <i class="glyphicon glyphicon-minus"></i>
+                                                        </a>
+                                                    </span>
+                                                </h3>
+                                            </div>
+                                            
+                                        </div>
+                                        <div  class="col-sm-1">
+                                            <a ng-click="addTag()">
+                                                <i class="glyphicon glyphicon-plus"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div>
+                <div class="col-sm-11" ng-init="showRequired=true;showOptional=false">
+                    <accordion close-others="true">
+                        <accordion-group heading="Required Settings" is-open="showRequired">
+                            <div class="form-horizontal">
+                                <div class="control-group" ng-repeat="setting in serviceTypeSetting | filter:{required: 'true'}">
+                                    <label class="control-label">{{setting.name}}</label>
+                                    <cm-setting definition="setting" setting="settings[setting.name]">
+                                </div>
+                            </div>
+                        </accordion-group>
+                        <accordion-group heading="Optional Settings" is-open="showOptional"> 
+                            <div class="form-horizontal">
+                                <div class="control-group" ng-repeat="setting in serviceTypeSetting | filter:{required: 'false'}">
+                                    <label class="control-label">{{setting.name}}</label>
+                                    <cm-setting definition="setting" setting="settings[setting.name]">
+                                </div>
+                            </div>
+                            
+                        </accordion-group>
+                    </accordion>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-disabled="serviceEditForm.$invalid" ng-click="save()">{{service._id ? "Edit" : "Add"}} Service</button>
+            <button class="btn btn-default" ng-click="dismiss()">Cancel</button>
+        </div>
+    </form>
+</div>
