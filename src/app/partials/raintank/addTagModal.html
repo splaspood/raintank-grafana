@@ -1,0 +1,49 @@
+<form name="addTagForm" class="css-form" novalidate ng-controller="raintankAddTagModalCtrl">
+    <div class="modal-header">
+        <a class="close" ng-click="close()">&times;</a>
+        <h3>Add Tag</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-danger" ng-show="error">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true" ng-click="dismiss_alert()">&times;</button>
+            {{error}}
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="radio" ng-model="createTag" ng-value="false">
+                    </span>
+                     <span class="form-control">Select Existing Tag</span>   
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input type="radio" ng-model="createTag" ng-value="true">
+                    </span>
+                     <span class="form-control">Create New Tag</span>   
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">Tag</label>
+                    </div>
+                    <div ng-show="createTag">
+                        <input type="text" ng-model="tagName" placeholder="Name" class="form-control">
+                    </div>
+                    <div ng-hide="createTag">
+                        <select ng-model="tagId" class="input-xlarge form-control" ng-options="tag._id as tag.name for (id, tag) in unassigned_tags"></select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-disabled="addTagForm.$invalid || (createTag && !tagName) || (!createTag && !tagId)" ng-click="save(tagId, tagName, createTag)">Add Tag</button>
+        <button class="btn btn-default" ng-click="close()">Cancel</button>
+    </div>
+</form>

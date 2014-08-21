@@ -1,7 +1,7 @@
 <div ng-controller="raintankServiceEditCtrl" class="modal">
     <form name="serviceEditForm" class="css-form" novalidate>
         <div class="modal-header">
-            <a class="close" ng-click="cancel()">&times;</a>
+            <a class="close" ng-click="dismiss()">&times;</a>
             <h3>{{service._id ? "Edit" : "Add"}} Service</h3>
         </div>
         <div class="modal-body">
@@ -43,62 +43,65 @@
                         </div>
                     </div>
 
-                    <div >
+                    <div class="row">
                         <div class="col-sm-11">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="row">
-                                        <label class="col-sm-2 control-label">Tags</Label>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <div class="col-sm-11">
-                                            <div ng-repeat="tagId in service.tags">
-                                                <h3 class="col-md-3 col-sm-4">
-                                                    <span class='label label-info'>{{tagsMap[tagId].name}}
-                                                        <a ng-click="removeTag($index)">
-                                                            <i class="glyphicon glyphicon-minus"></i>
-                                                        </a>
-                                                    </span>
-                                                </h3>
-                                            </div>
+                            <table class="table well" style="margin: 10px">
+                                <thead>
+                                       <tr><th>Tags</th></tr>
+                                </thead>
+                                <tbody class="form-group">
+                           
+                                    <tr ng-repeat="tagId in service.tags">
+                                        <td class="col-md-3 col-sm-4">
+                                            <span class='label label-info'>{{tagsMap[tagId].name}}
+                                                <a ng-click="removeTag($index)">
+                                                    <i class="icon-minus"></i>
+                                                </a>
+                                            </span>
+                                        </td>
+                                    </tr>
                                             
-                                        </div>
-                                        <div  class="col-sm-1">
+            
+                                    <tr>
+                                        <td>
                                             <a ng-click="addTag()">
-                                                <i class="glyphicon glyphicon-plus"></i>
+                                                <i class="icon-plus"></i>
                                             </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
                 </div>
             </div>
             <div>
-                <div class="col-sm-11" ng-init="showRequired=true;showOptional=false">
-                    <accordion close-others="true">
-                        <accordion-group heading="Required Settings" is-open="showRequired">
-                            <div class="form-horizontal">
-                                <div class="control-group" ng-repeat="setting in serviceTypeSetting | filter:{required: 'true'}">
-                                    <label class="control-label">{{setting.name}}</label>
-                                    <cm-setting definition="setting" setting="settings[setting.name]">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Settings</label>
+                    <div class="col-sm-9">
+                        <div data-fade="1" ng-model="settingsTab" bs-tabs>
+                            <div data-title="Required">
+                                <div class="form-horizontal">
+
+                                    <div class="control-group" ng-repeat="setting in serviceTypeSetting | filter:{required: 'true'}">
+                                        <label class="control-label">{{setting.name}}</label>
+                                        <raintank-setting definition="setting" setting="settings[setting.name]">
+                                    </div>
                                 </div>
                             </div>
-                        </accordion-group>
-                        <accordion-group heading="Optional Settings" is-open="showOptional"> 
-                            <div class="form-horizontal">
-                                <div class="control-group" ng-repeat="setting in serviceTypeSetting | filter:{required: 'false'}">
-                                    <label class="control-label">{{setting.name}}</label>
-                                    <cm-setting definition="setting" setting="settings[setting.name]">
+                            <div data-title="Optional">
+                                <div class="form-horizontal">
+                                    <div class="control-group" ng-repeat="setting in serviceTypeSetting | filter:{required: 'false'}">
+                                        <label class="control-label">{{setting.name}}</label>
+                                        <raintank-setting definition="setting" setting="settings[setting.name]">
+                                    </div>
                                 </div>
                             </div>
-                            
-                        </accordion-group>
-                    </accordion>
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

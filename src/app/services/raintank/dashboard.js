@@ -6,7 +6,7 @@ define([
 
   var module = angular.module('grafana.services');
 
-  module.service('raintankDashboard', function($http, $routeParams, raintankDevice, raintankResourceType) {
+  module.service('raintankDashboard', function($http, $routeParams, raintankDevice, raintankService, raintankResourceType) {
       var self = this;
 
       this.device = function(cb) {

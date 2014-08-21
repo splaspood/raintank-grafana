@@ -24,9 +24,15 @@
   <div class="container-fluid main">
     <div>
       <div class="grafana-container container">
-        <div class="panel-container" ng-repeat="service in services">
-        	<a href="#/dashboard/service/{{service._id}}">{{service.name}}</a>
-        </div>
+        <table class="table table-striped">
+          <tbody>
+            <tr ng-repeat="service in services">
+              <td class="col-sm-1"><a ng-click="editService(service._id)"><i class="icon-cog"></i></a></td>
+              <td class="col-sm-8"><a href="#/dashboard/service/{{service._id}}">{{service.name}}</a></td>
+              <td class="col-sm-3"></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

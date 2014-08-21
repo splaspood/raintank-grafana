@@ -29,4 +29,28 @@ define([
       });
     }
   ]);
+  module.factory('raintankServiceType', ['$resource',
+    function($resource) {
+      return $resource('/serviceTypes/:serviceType', {}, {
+        query: {method:'GET', isArray:false},
+        update: {method: 'PUT'},
+      });
+    }
+  ]);
+  module.factory('raintankLocations', ['$resource',
+    function($resource) {
+      return $resource('/locations/:location', {}, {
+        query: {method:'GET', isArray:false},
+        update: {method: 'PUT'},
+      });
+    }
+  ]);
+  module.factory('raintankTag', ['$resource',
+    function($resource) {
+      return $resource('/tags/:tag', {}, {
+        query: {method:'GET', isArray:false},
+        update: {method: 'PUT'},
+      });
+    }
+  ]);
 });
