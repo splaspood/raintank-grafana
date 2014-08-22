@@ -81,6 +81,7 @@ function (angular, config, _) {
     ];
 
     $scope.changeType = function() {
+        console.log('changeType called.');
         var settings = [];
         for (var i=0; i<$scope.serviceTypes.length; i++) {
             if ($scope.serviceTypes[i]._id == $scope.service.serviceType) {
