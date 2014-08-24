@@ -61,7 +61,6 @@ define([
                 console.log("matches");
                 console.log(matches);
                 if (matches) {
-                  console.log(matches);
                   var position = matches[1];
                   _.forEach(template.metrics, function(metric) {
                     var parts = metric.split('\.');
@@ -76,9 +75,9 @@ define([
                 //iterate through the template and search for "%group%";
                 for (var group in groups) {
                   var tmpl = t;
-                  console.log(t);
-                  t = t.replace(/\%group\%/ig, group);
-                  tmpPanels.push(JSON.parse(t));
+                  console.log(tmpl);
+                  tmpl = tmpl.replace(/\%group\%/ig, group);
+                  tmpPanels.push(JSON.parse(tmpl));
                 };
               } else {
                 tmpPanels.push(template.template.panel);
