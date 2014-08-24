@@ -13,10 +13,10 @@ function (angular, jquery, _, config) {
   module.config(function($routeProvider) {
     $routeProvider
       .when('/dashboard/device/:device', {
-        templateUrl: 'app/partials/dashboardDevice.html',
+        templateUrl: 'app/partials/dashboard.html',
         controller : 'DashFromDeviceProvider',
       }).when('/dashboard/service/:service', {
-        templateUrl: 'app/partials/dashboardService.html',
+        templateUrl: 'app/partials/dashboard.html',
         controller : 'DashFromServiceProvider',
       }).when('/dashboard/device', {
         templateUrl: 'app/partials/deviceList.html',
