@@ -11,6 +11,7 @@ define([
   './unsavedChangesSrv',
   './dashboard/dashboardKeyBindings',
   './dashboard/dashboardSrv',
+  './dashboard/dashboardViewStateSrv',
   './raintank/all',
 ],
 function () {});
