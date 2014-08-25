@@ -11,14 +11,14 @@ define([
 
       this.device = function(cb) {
         var deviceReq = raintankDevice.get($routeParams)
-        return populateDash(deviceReq, 'device', cb);
+        return self.populateDash(deviceReq, 'device', cb);
       }
       this.service = function(cb) {
         var serviceReq = raintankService.get($routeParams)
-        return populateDash(serviceReq, 'service', cb);
+        return self.populateDash(serviceReq, 'service', cb);
       }
 
-      function populateDash(request, type, cb) {
+      this.populateDash = function(request, type, cb) {
         var resourceTypeReq = raintankResourceType.query();
         var dashTemplate = $http({
           url: "app/dashboards/empty.json",
@@ -34,10 +34,8 @@ define([
             var resourceTypes = resourceTypeReq.resourceTypes;
             _.forEach(obj.metrics, function(metric) {
               _.forEach(resourceTypes.sort(function(a,b){return b.name.localeCompare(a.name)}), function(template) {
-                console.log("looking for metrics for resource: " + template.name);
                 var match = new RegExp(template.match);
                 if (match.test(metric.name)) {
-                  console.log(metric.name + " matched to " + template.name);
                   if (template._id in matchedTemplates) {
                     matchedTemplates[template._id].metrics.push(metric.name);
                     matchedTemplates[template._id].interval = metric.interval;
@@ -55,34 +53,27 @@ define([
               var template = matchedTemplates[templateId];
               var tmpPanels = [];
               if ('groupBy' in template.template && template.template.groupBy) {
-                console.log(groupRegex);
                 var groups = {};
                 var matches = template.template.groupBy.match(/^\$(\d+)$/);
-                console.log("matches");
-                console.log(matches);
                 if (matches) {
                   var position = matches[1];
                   _.forEach(template.metrics, function(metric) {
                     var parts = metric.split('\.');
-                    console.log(parts);
                     if (!(parts[position] in groups)) {
                       groups[parts[position]] = true;
                     }
                   });
                 }
-                console.log(groups);
                 var t = JSON.stringify(template.template.panel);
                 //iterate through the template and search for "%group%";
                 for (var group in groups) {
                   var tmpl = t;
-                  console.log(tmpl);
                   tmpl = tmpl.replace(/\%group\%/ig, group);
                   tmpPanels.push(JSON.parse(tmpl));
                 };
               } else {
                 tmpPanels.push(template.template.panel);
               }
-              console.log(tmpPanels);
               _.forEach(tmpPanels, function(panel) {
                 _.each(panel.targets, function(target) {
                    _.each(panel.targets, function(target) {
@@ -90,7 +81,7 @@ define([
                     if (target.function == "derivative") {
                       interval = interval * 2;
                     }
-                    // we want to only get metrics for this device.
+                    // we want to only get metrics for this device/service.
                     var extra = {
                       condition_filter:true,
                       condition_key:type,
@@ -105,9 +96,6 @@ define([
                 });
               });
             }
-
-            console.log(panels);
-            console.log(template);
             dashTemplate.then(function(resp, status) {
               var tmpl = resp.data;
               tmpl.title = obj.name;
@@ -139,8 +127,7 @@ define([
                 tmpl.rows[rowCount].title += panel.title;
                 tmpl.rows[rowCount].panels.push(panel);
               });
-              console.log(tmpl);
-              return cb(null, tmpl);
+              return cb(null, tmpl, obj);
             }, function(resp) {
               console.log(resp);
               return cb(new Error('Could not load dashboards/empty.json'));

@@ -27,9 +27,9 @@ function (angular, jquery, _, config) {
       });
   });
 
-  module.controller('DashFromDeviceProvider', function($scope, $rootScope, $http, $routeParams, alertSrv, $q, raintankDashboard) {
+  module.controller('DashFromDeviceProvider', function($scope, $rootScope, $http, $routeParams, alertSrv, $q, raintankDashboard, raintankDevice, raintankService) {
     console.log('DashFromDeviceProvider');
-    raintankDashboard.device(function(err, dashboard) {
+    raintankDashboard.device(function(err, dashboard, device) {
       if (err) {
         alertSrv.set('Error',err.message ,'error');
       } else {
@@ -37,9 +37,11 @@ function (angular, jquery, _, config) {
       }
     });
   });
-  module.controller('DashFromServiceProvider', function($scope, $rootScope, $http, $routeParams, alertSrv, $q, raintankDashboard) {
+  module.controller('DashFromServiceProvider', function($scope, $rootScope, $http, $routeParams, alertSrv, $q, raintankDashboard, raintankDevice, raintankService) {
+    $scope.DashFromService = true;
+    $scope.serviceReq = raintankService.get($routeParams)
     console.log('DashFromDeviceProvider');   
-    raintankDashboard.service(function(err, dashboard) {
+    raintankDashboard.populateDash($scope.serviceReq, 'service', function(err, dashboard, service) {
       if (err) {
         alertSrv.set('Error',err.message ,'error');
       } else {

@@ -12,10 +12,6 @@ function (angular, config, _) {
     var serviceReq = raintankService.query(function() {
       $scope.services = serviceReq.services;
     });
-    $scope.modal = {
-      title: "test Modal",
-    };
-    
  
     $scope.editService = function(serviceId) {
 
@@ -26,8 +22,27 @@ function (angular, config, _) {
         modalEl.modal('show');
       });
     };
-
   });
+
+  module.controller('raintankServiceDetailCtrl', function($scope, $rootScope, $modal, $q, raintankServiceType) {
+    console.log("raintankServiceDetailCtrl");
+    $scope.serviceReq.$promise.then(function() {
+      $scope.service = $scope.serviceReq.service;
+      var serviceTypeReq = raintankServiceType.get({serviceType: $scope.service.serviceType}, function() {
+        console.log(serviceTypeReq.serviceType);
+        $scope.serviceType = serviceTypeReq.serviceType;
+      });
+    });
+    $scope.editService = function(serviceId) {
+      $scope.editServiceId = serviceId;
+      // Create modal (returns a promise since it may have to perform an http request)
+      $scope.editModal = $modal({template: 'app/partials/raintank/serviceEditModal.html', persist: true, show: false, backdrop: 'static', scope: $scope});
+      $q.when($scope.editModal).then(function(modalEl) {
+        modalEl.modal('show');
+      });
+    };
+  });
+
   module.controller('raintankServiceEditCtrl', function($scope, $q, $modal, raintankService, raintankServiceType, raintankLocations, raintankTag ) {
     console.log('raintankServiceEditCtrl');
     $scope.error = null;
@@ -44,10 +59,12 @@ function (angular, config, _) {
     var serviceReq;
     if ($scope.editServiceId) {
       console.log($scope.editServiceId);
-      serviceReq = raintankService.get({service: $scope.editServiceId}, function() {
-        $scope.service = serviceReq.service;
-        $scope.changeType();
-      });
+      if (!('service' in $scope)) {
+        serviceReq = raintankService.get({service: $scope.editServiceId}, function() {
+          $scope.service = serviceReq.service;
+          $scope.changeType();
+        });
+      }
     } else {
       $scope.service = {enabled: true, locations: [], tags: [], settings: []};
     }
@@ -126,15 +143,18 @@ function (angular, config, _) {
       if ('_id' in $scope.service) {
           raintankService.update({service: $scope.service._id}, {service: $scope.service}, 
               function(resp, headers) {
-                  for (var i=0; i < $scope.services.length; i++) {
-                    var svc = $scope.services[i];
-                    if (svc._id == $scope.service._id) {
-                      $scope.services[i] = resp.service;
-                      break;
+                  _.merge($scope.service,resp.service);
+                  if ('services' in $scope) {
+                    for (var i=0; i < $scope.services.length; i++) {
+                      var svc = $scope.services[i];
+                      if (svc._id == $scope.service._id) {
+                        $scope.services[i] = resp.service;
+                        break;
+                      }
                     }
+                    $scope.reset();
                   }
-                  $scope.dismiss();
-                  $scope.reset();
+                  $scope.dismiss();      
               },
               function(resp) {
                   //error

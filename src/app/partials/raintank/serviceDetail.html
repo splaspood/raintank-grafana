@@ -1,0 +1,52 @@
+<div ng-controller="raintankServiceDetailCtrl">
+  	<div class="container-fluid main" >
+    	<div class="grafana-container container">
+    		<div class="grafana-row">
+    			<div class="panel">
+    				<div class="panel-content">
+    					<a ng-click="editService(service._id)"><i class="icon-cog"></i></a>
+    				</div>
+    			</div>
+        		<div class="panel">
+    				<div class="panel-content">
+    					<table class="table">
+    						<tbody>
+    							<tr>
+    								<td><b>Name:<b></td><td>{{service.name}}</td>
+    							</r>
+    							<tr>
+    								<td><b>Type:</b></td><td>{{serviceType.name}}</td>
+    							</tr>
+    							<tr>
+    								<td><b>Frequency:</b></td><td>{{service.frequency}}</td>
+    							</tr>
+    							<tr>
+    								<td><b>Enabled:</b></td><td><input type="checkbox" ng-model="service.enabled" disabled="disabled" class="form-control input-sm"/></td>
+    							</tr>
+
+    						</tbody>
+    					</table>
+    				</div>
+    			</div>
+    			<div class="panel">
+    				<div class="panel-content">
+    					<table class="table">
+    						<tbody>
+    							<tr>
+    								<td><b>Tags:<b></td><td>{{service.tags}}</td>
+    							</r>
+    							<tr>
+    								<td><b>Alarms:</b></td><td>TODO</td>
+    							</tr>
+    							<tr>
+    								<td><a><b>Thresholds</b></a></td>
+    								<td><a><b>Events</b></a></td>
+    							</tr>
+    						</tbody>
+    					</table>
+    				</div>
+    			</div>
+    		</div>
+      	</div>
+    </div>
+</div>
