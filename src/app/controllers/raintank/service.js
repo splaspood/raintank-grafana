@@ -2,13 +2,14 @@ define([
   'angular',
   'config',
   'lodash',
+  'kbn',
 ],
-function (angular, config, _) {
+function (angular, config, _, kbn) {
   "use strict";
 
   var module = angular.module('grafana.controllers');
 
-  module.controller('ServiceListProvider', function($scope, $q, $modal, alertSrv, raintankService ) {
+  module.controller('ServiceListProvider', function($scope, $rootScope, $q, $modal, alertSrv, raintankService ) {
     var serviceReq = raintankService.query(function() {
       $scope.services = serviceReq.services;
     });
@@ -24,14 +25,39 @@ function (angular, config, _) {
     };
   });
 
-  module.controller('raintankServiceDetailCtrl', function($scope, $rootScope, $modal, $q, raintankServiceType) {
+  module.controller('raintankServiceDetailCtrl', function($scope, $rootScope, $modal, $q, raintankServiceType, raintankTag, raintankServiceEvent) {
     console.log("raintankServiceDetailCtrl");
+
+    if ('filter' in $scope) {
+      $scope.range = $scope.filter.timeRange();
+    } else {
+      console.log('setting inital time range.');
+      var now = new Date();
+      $scope.range = {
+        from: kbn.parseDate('now-1h'),
+        to: now
+      }
+    }
+    console.log($scope.range);
+
+    $scope.$on('refresh',function(event) {
+      $scope.range = $scope.filter.timeRange();
+      $scope.getEvents();
+    });
+
+    $scope.getEvents = function() {
+      var eventReq = raintankServiceEvent.query({service: $scope.service._id, start: $scope.range.from.getTime(), end: $scope.range.to.getTime()}, function() {
+        $scope.serviceEvents = eventReq.serviceEvents;
+      });
+    }
+
     $scope.serviceReq.$promise.then(function() {
       $scope.service = $scope.serviceReq.service;
       var serviceTypeReq = raintankServiceType.get({serviceType: $scope.service.serviceType}, function() {
         console.log(serviceTypeReq.serviceType);
         $scope.serviceType = serviceTypeReq.serviceType;
       });
+      $scope.getEvents();
     });
     $scope.editService = function(serviceId) {
       $scope.editServiceId = serviceId;
@@ -41,33 +67,19 @@ function (angular, config, _) {
         modalEl.modal('show');
       });
     };
-  });
-
-  module.controller('raintankServiceEditCtrl', function($scope, $q, $modal, raintankService, raintankServiceType, raintankLocations, raintankTag ) {
-    console.log('raintankServiceEditCtrl');
-    $scope.error = null;
-    $scope.settings = {};
-    $scope.serviceTypeSetting = [];
-
-    var serviceTypeReq = raintankServiceType.query(function() {
-      $scope.serviceTypes = serviceTypeReq.serviceTypes;
-    });
-
-    var locationsReq = raintankLocations.query(function() {
-      $scope.locations = locationsReq.locations;
-    });
-    var serviceReq;
-    if ($scope.editServiceId) {
-      console.log($scope.editServiceId);
-      if (!('service' in $scope)) {
-        serviceReq = raintankService.get({service: $scope.editServiceId}, function() {
-          $scope.service = serviceReq.service;
-          $scope.changeType();
-        });
+    $scope.eventClass = function(level) {
+      if (level == 'critical') {
+        return "error";
       }
-    } else {
-      $scope.service = {enabled: true, locations: [], tags: [], settings: []};
+      return '';
     }
+    $scope.thresholds = function() {
+      // Create modal (returns a promise since it may have to perform an http request)
+      $scope.thresholdsModal = $modal({template: 'app/partials/raintank/serviceThresholdsModal.html', persist: true, show: false, backdrop: 'static', scope: $scope});
+      $q.when($scope.thresholdsModal).then(function(modalEl) {
+        modalEl.modal('show');
+      });
+    };
 
     var tagsReq = raintankTag.query();
     tagsReq.$promise.then(function() {
@@ -85,17 +97,80 @@ function (angular, config, _) {
       }
     };
 
-    $scope.frequency = [
-            {label: '10sec', value: 10},
-            {label: '30sec', value: 30},
-            {label: '1min', value: 60},
-            {label: '2min', value: 120},
-            {label: '5min', value: 300},
-            {label: '10min', value: 600},
-            {label: '15min', value: 900},
-            {label: '30min', value: 1800},
-            {label: '60min', value: 3600}
-    ];
+  });
+
+  module.controller('raintankServiceThresholdsCtrl', function($scope, $q, raintankService ) {
+    $scope.error = null;
+    $scope.newThreshold = null;
+    if (!('service') in $scope) {
+      alert('service not in scope');
+    } else {
+      console.log($scope.service);
+    }
+
+    $scope.metricsWithThresholds = function() {
+      var metrics = [];
+      _.forEach($scope.service.metrics, function(metric) {
+        if ('thresholds' in metric) {
+          metrics.push(metric);
+        }
+      });
+      return metrics;
+    };
+
+    $scope.metricsWithoutThresholds = function() {
+      var metrics = [];
+      _.forEach($scope.service.metrics, function(metric) {
+        if (!('thresholds' in metric)) {
+          metrics.push(metric);
+        }
+      });
+      return metrics;
+    };
+
+    $scope.addThreshold = function() {
+      $scope.newThreshold.thresholds = {
+        warnMin: null,
+        warnMax: null,
+        criticalMin: null,
+        criticalMax: null
+      }
+    };
+
+    $scope.removeThresholds = function(metric) {
+      delete metric.thresholds;
+    };
+
+    $scope.save = function() {
+      console.log('saving thresholds');
+      raintankService.update({service: $scope.service._id}, {service: $scope.service},
+        function(resp, headers) {
+          $scope.service = resp.service;
+          $scope.dismiss();
+        },
+        function(resp) {
+          //dismiss_error
+          console.log(resp);
+          $scope.error = "failed to save service.";
+        }
+      );
+    };
+  });
+
+  module.controller('raintankServiceEditCtrl', function($scope, $q, $modal, raintankService, raintankServiceType, raintankLocations, raintankTag ) {
+    console.log('raintankServiceEditCtrl');
+    console.log($scope);
+    $scope.error = null;
+    $scope.settings = {};
+    $scope.serviceTypeSetting = [];
+
+    var serviceTypeReq = raintankServiceType.query(function() {
+      $scope.serviceTypes = serviceTypeReq.serviceTypes;
+    });
+
+    var locationsReq = raintankLocations.query(function() {
+      $scope.locations = locationsReq.locations;
+    });
 
     $scope.changeType = function() {
         console.log('changeType called.');
@@ -119,6 +194,57 @@ function (angular, config, _) {
         }
         $scope.serviceTypeSetting = settings;
     }
+
+    var serviceReq;
+    if ($scope.editServiceId) {
+      console.log($scope.editServiceId);
+      if (!('service' in $scope)) {
+        console.log('sevice not in scope');
+        serviceReq = raintankService.get({service: $scope.editServiceId}, function() {
+          $scope.service = serviceReq.service;
+          $scope.changeType();
+        });
+      } else {
+        console.log('service already in scope');
+        console.log($scope.service)
+        serviceTypeReq.$promise.then(function() {
+
+          $scope.changeType();
+        });
+      }
+    } else {
+      $scope.service = {enabled: true, locations: [], tags: [], settings: []};
+    }
+    if (!('tags' in $scope)) {
+      var tagsReq = raintankTag.query();
+      tagsReq.$promise.then(function() {
+        $scope.tags = tagsReq.tags;
+        $scope.buildTagsMap();
+      });
+    }
+    $scope.buildTagsMap = function() {
+      $scope.tagsMap = {};
+      if (_.isArray($scope.tags)) {
+        console.log('updating tagsMap');
+        $scope.tags.forEach(function(tag) {
+          $scope.tagsMap[tag._id] = tag; 
+        });
+        console.log($scope.tagsMap);
+      }
+    };
+
+    $scope.frequency = [
+            {label: '10sec', value: 10},
+            {label: '30sec', value: 30},
+            {label: '1min', value: 60},
+            {label: '2min', value: 120},
+            {label: '5min', value: 300},
+            {label: '10min', value: 600},
+            {label: '15min', value: 900},
+            {label: '30min', value: 1800},
+            {label: '60min', value: 3600}
+    ];
+
     $scope.dismiss_error = function() {
       $scope.error = null;
     };
@@ -127,11 +253,6 @@ function (angular, config, _) {
       $scope.service = {enabled: true, locations: [], tags: []};
     };
 
-    $scope.save = function() {
-      console.log('save');
-      $scope.services.push($scope.service);
-      $scope.dismiss();
-    }
     $scope.save = function() {
       $scope.service.settings = [];
       _.forEach($scope.serviceTypeSetting, function(setting) {

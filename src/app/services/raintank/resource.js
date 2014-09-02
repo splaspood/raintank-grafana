@@ -53,4 +53,12 @@ define([
       });
     }
   ]);
+  module.factory('raintankServiceEvent', ['$resource',
+    function($resource) {
+      return $resource('/serviceEvents/:serviceEvent', {}, {
+        query: {method:'GET', isArray:false},
+        update: {method: 'PUT'},
+      });
+    }
+  ]);
 });
