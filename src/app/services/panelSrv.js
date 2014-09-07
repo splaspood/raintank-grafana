@@ -95,6 +95,7 @@ function (angular, _) {
       };
 
       $scope.toggleFullscreen = function(edit) {
+        console.log($scope.dashboardViewState);
         $scope.dashboardViewState.update({ fullscreen: true, edit: edit, panelId: $scope.panel.id });
       };
 

@@ -1,9 +1,9 @@
 <ul class="nav navbar-nav" ng-show="loggedIn">
-	<li>
+	<!--<li>
 	    <a href="#/dashboard/device" >
 	        <i class="icon-desktop"></i>&nbsp;Devices
 	    </a>
-	</li>
+	</li>-->
 	<li>
 	    <a href="#/dashboard/service" >
 	        <i class="icon-cloud"></i>&nbsp;Services
@@ -22,7 +22,7 @@
       </a>
       <ul class="dropdown-menu">
           <li>
-              <a ng-click="logout()"><i class="icon-signout"></i>&nbsp;Logout</a>
+              <a href="/logout"><i class="icon-signout"></i>&nbsp;Logout</a>
           </li>
           <li>
               <a ng-click="show_changePassword()"><i class="icon-lock"></i>&nbsp;Change Password</a>

@@ -18,6 +18,7 @@ function (angular, jquery, _, config) {
       }).when('/dashboard/service/:service', {
         templateUrl: 'app/partials/dashboard.html',
         controller : 'DashFromServiceProvider',
+        reloadOnSearch: false,
       }).when('/dashboard/device', {
         templateUrl: 'app/partials/deviceList.html',
         controller : 'DeviceListProvider',

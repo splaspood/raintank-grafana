@@ -34,6 +34,7 @@ function (angular, $, config, _) {
     };
 
     $scope.setupDashboard = function(event, dashboardData) {
+      console.log("setupDashboard");
       timer.cancel_all();
 
       $rootScope.performance.dashboardLoadStart = new Date().getTime();

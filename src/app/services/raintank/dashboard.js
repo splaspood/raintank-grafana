@@ -35,6 +35,7 @@ define([
             _.forEach(obj.metrics, function(metric) {
               _.forEach(resourceTypes.sort(function(a,b){return b.name.localeCompare(a.name)}), function(template) {
                 var match = new RegExp(template.match);
+                //console.log('checking if metric metric matches resourceType: ' + template.match +  " " + metric.name);
                 if (match.test(metric.name)) {
                   if (template._id in matchedTemplates) {
                     matchedTemplates[template._id].metrics.push(metric.name);
@@ -69,45 +70,38 @@ define([
                 for (var group in groups) {
                   var tmpl = t;
                   tmpl = tmpl.replace(/\%group\%/ig, group);
+                  tmpl = tmpl.replace(/\%name\%/ig, obj.name.replace(/[^\w]/, '_'));
                   tmpPanels.push(JSON.parse(tmpl));
                 };
               } else {
-                tmpPanels.push(template.template.panel);
+                var tmpl = JSON.stringify(template.template.panel);
+                tmpl = tmpl.replace(/\%group\%/ig, group);
+                tmpl = tmpl.replace(/\%name\%/ig, obj.name.replace(/[^\w]/, '_'));
+                tmpPanels.push(JSON.parse(tmpl));
               }
               _.forEach(tmpPanels, function(panel) {
-                _.each(panel.targets, function(target) {
-                   _.each(panel.targets, function(target) {
-                    var interval = parseInt(template.interval);
-                    if (target.function == "derivative") {
-                      interval = interval * 2;
-                    }
-                    // we want to only get metrics for this device/service.
-                    var extra = {
-                      condition_filter:true,
-                      condition_key:type,
-                      condition_op:"=",
-                      condition_value:"'"+$routeParams[type]+"'",
-                      interval: ""+ interval+"s"
-                    }
-                    target = _.assign(target, extra);
-                  });
-                  panel.span=6;
-                  panels.push(panel);
-                });
+                panel.span=6;
+                panels.push(panel);
               });
             }
             dashTemplate.then(function(resp, status) {
               var tmpl = resp.data;
               tmpl.title = obj.name;
-              var rowSpans = 0;
+              var rowSpans = 12;
               var rowCount = 0;
               tmpl.rows = [{
-                "title": "",
+                "title": "Service Details",
                 "height": "250px",
-                "editable": false,
-                "collapse": true,
-                "panels": []
+                "editable": true,
+                "collapse": false,
+                "panels": [{
+                  "title": "Service Details",
+                  "type": "raintankServiceDescription",
+                  "span": 12,
+                  "editable": false,
+                }]
               }];
+              tmpl.rows[0].panels[0][type] = obj;
               _.forEach(panels, function(panel) {
                 rowSpans += panel.span;
                 if (rowSpans > 12) {
@@ -116,7 +110,7 @@ define([
                   tmpl.rows.push({
                     "title": "",
                     "height": "250px",
-                    "editable": false,
+                    "editable": true,
                     "collapse": true,
                     "panels": []
                   });

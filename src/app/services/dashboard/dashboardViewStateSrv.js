@@ -54,7 +54,7 @@ function (angular, _, $) {
 
     DashboardViewState.prototype.update = function(state, skipUrlSync) {
       _.extend(this, state);
-
+      console.log("dashboardViewState.update");
       if (!this.fullscreen) {
         this.panelId = null;
         this.edit = false;
