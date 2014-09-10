@@ -20,10 +20,10 @@ function (angular, jquery, _, config) {
         controller : 'DashFromServiceProvider',
         reloadOnSearch: false,
       }).when('/dashboard/device', {
-        templateUrl: 'app/partials/deviceList.html',
+        templateUrl: 'plugins/raintank/partials/deviceList.html',
         controller : 'DeviceListProvider',
       }).when('/dashboard/service', {
-        templateUrl: 'app/partials/serviceList.html',
+        templateUrl: 'plugins/raintank/partials/serviceList.html',
         controller : 'ServiceListProvider',
       });
   });

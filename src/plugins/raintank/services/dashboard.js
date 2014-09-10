@@ -1,6 +1,5 @@
 define([
   'angular',
-  'services/raintank/all'
 ], function (angular) {
   'use strict';
 
@@ -21,7 +20,7 @@ define([
       this.populateDash = function(request, type, cb) {
         var resourceTypeReq = raintankResourceType.query();
         var dashTemplate = $http({
-          url: "app/dashboards/empty.json",
+          url: "plugins/raintank/dashboards/empty.json",
           method: "GET",
         });
 

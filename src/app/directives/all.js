@@ -16,5 +16,4 @@ define([
   './graphiteFuncEditor',
   './grafanaVersionCheck',
   './influxdbFuncEditor',
-  './raintank/all'
 ], function () {});
