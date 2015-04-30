@@ -43,6 +43,7 @@ func dispatchJobs(t time.Time) {
 	fmt.Println(t, "querying for jobs that should run in second", normalizedTime)
 	// TODO query database.
 	// TODO check/document what happens with None values. add a graphiteQuery function that just gets last known value?
+	// TODO: what do we do when timestamp is in future? or what if it's very old?
 	jobs := []string{
 		`median(graphite("dieter_plaetinck_be.paris.network.http.dataLength","2m","","")) > 10`,
 		`median(graphite("dieter_plaetinck_be.paris.network.http.dataLength","2m","","")) > 100`,
@@ -62,7 +63,7 @@ func Executor() {
 	// req.Header.Add("X-Org-Id", strconv.FormatInt(c.OrgId, 10)) ?
 	// cookie?
 	// ...?
-	gr := graphite.Host("portal.raintank.io/api/graphite/")
+	gr := graphite.Host("portal.raintank.io/api/graphite")
 
 	for job := range queue {
 		// TODO: ignore jobs already processed
