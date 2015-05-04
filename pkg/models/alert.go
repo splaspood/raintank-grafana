@@ -11,6 +11,7 @@ type Alert struct {
 	Id        int64
 	OrgId     int64
 	Freq      uint32
+	Offset    uint8 //offset on top of "even" minute/10s/.. intervals
 	Expr      string
 	LevelWarn float64
 	LevelCrit float64

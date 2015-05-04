@@ -45,9 +45,8 @@ func dispatchJobs(t time.Time) {
 	// TODO check/document what happens with None values. add a graphiteQuery function that just gets last known value?
 	// TODO: what do we do when timestamp is in future? or what if it's very old?
 	jobs := []string{
-		`median(graphite("dieter_plaetinck_be.paris.network.http.dataLength","2m","","")) > 10`,
-		`median(graphite("dieter_plaetinck_be.paris.network.http.dataLength","2m","","")) > 100`,
-		`median(graphite("avg(dieter_plaetinck_be.*.network.http.dataLength)","2m","","")) > 100`,
+		`median(graphite("apps.fakesite.web_server_01.counters.requests.count","2m","","")) < 0`,
+		`median(graphite("avg(apps.fakesite.web_server_*.counters.requests.count)","2m","","")) > 1`,
 	}
 	for _, job := range jobs {
 		queue <- Job{
@@ -59,11 +58,12 @@ func dispatchJobs(t time.Time) {
 }
 
 func Executor() {
-	// TODO: authentication. how?
-	// req.Header.Add("X-Org-Id", strconv.FormatInt(c.OrgId, 10)) ?
-	// cookie?
-	// ...?
-	gr := graphite.Host("portal.raintank.io/api/graphite")
+	// TODO: once i have my own linux dev machine i can easily run docker and will nice authenticated requests to configured source
+	gr := graphite.HostHeader(
+		"play.grafana.org/api/datasources/proxy/1",
+		http.Header{
+			"X-Org-Id": []string{"7"},
+		})
 
 	for job := range queue {
 		// TODO: ignore jobs already processed
@@ -94,7 +94,9 @@ func Executor() {
 		}
 		results, _, err := exp.Execute(rh.Context, rh.GraphiteContext, rh.Logstash, rh.Cache, nil, rh.Start, 0, true, nil, nil, nil)
 		fmt.Println(job.ts, job.expr)
-		spew.Dump(results)
+		for _, res := range results.Results {
+			fmt.Println(res.Group, res.Value)
+		}
 		spew.Dump(err)
 	}
 }
