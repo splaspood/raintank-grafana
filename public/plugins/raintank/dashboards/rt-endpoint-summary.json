@@ -1,10 +1,11 @@
 {
-  "title": "rt-endpoint-summary",
-  "originalTitle": "rt-endpoint-summary",
+  "id": 21,
+  "title": "rt-endpoint-summary Copy",
+  "originalTitle": "rt-endpoint-summary Copy",
   "tags": [],
   "style": "dark",
   "timezone": "browser",
-  "editable": false,
+  "editable": true,
   "hideControls": false,
   "sharedCrosshair": false,
   "rows": [
@@ -33,15 +34,15 @@
     {
       "collapse": false,
       "editable": true,
-      "height": "100px",
+      "height": "25px",
       "panels": [
         {
           "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
+          "colorBackground": false,
+          "colorValue": true,
           "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
+            "rgba(120, 120, 120, 0.9)",
+            "rgba(92, 92, 92, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
           "decimals": 2,
@@ -57,8 +58,8 @@
           "nullText": null,
           "postfix": "",
           "postfixFontSize": "50%",
-          "prefix": "DNS",
-          "prefixFontSize": "50%",
+          "prefix": "<div style=\"margin-bottom: 15px;\"> DNS Uptime </div>",
+          "prefixFontSize": "30%",
           "span": 3,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
@@ -71,7 +72,7 @@
               "target": "scale(averageSeries($endpoint.$collector.network.dns.ok_state), 100)"
             }
           ],
-          "thresholds": "0,99,100",
+          "thresholds": "0,0,100",
           "title": "",
           "transparent": true,
           "type": "singlestat",
@@ -87,11 +88,11 @@
         },
         {
           "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
+          "colorBackground": false,
+          "colorValue": true,
           "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
+            "rgba(96, 96, 96, 0.9)",
+            "rgba(94, 94, 94, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
           "decimals": 2,
@@ -107,8 +108,8 @@
           "nullText": null,
           "postfix": "",
           "postfixFontSize": "50%",
-          "prefix": "PING",
-          "prefixFontSize": "50%",
+          "prefix": "<div style=\"margin-bottom: 15px;\"> Ping Uptime </div>",
+          "prefixFontSize": "30%",
           "span": 3,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
@@ -121,7 +122,7 @@
               "target": "scale(averageSeries($endpoint.$collector.network.ping.ok_state), 100)"
             }
           ],
-          "thresholds": "0,99,100",
+          "thresholds": "0,100",
           "title": "",
           "transparent": true,
           "type": "singlestat",
@@ -137,11 +138,11 @@
         },
         {
           "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
+          "colorBackground": false,
+          "colorValue": true,
           "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
+            "rgba(83, 83, 83, 0.9)",
+            "rgba(81, 81, 81, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
           "decimals": 2,
@@ -157,8 +158,8 @@
           "nullText": null,
           "postfix": "",
           "postfixFontSize": "50%",
-          "prefix": "HTTP",
-          "prefixFontSize": "50%",
+          "prefix": "<div style=\"margin-bottom: 15px;\"> HTTP Uptime </div>",
+          "prefixFontSize": "30%",
           "span": 3,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
@@ -171,7 +172,7 @@
               "target": "scale(averageSeries($endpoint.$collector.network.http.ok_state), 100)"
             }
           ],
-          "thresholds": "0,99,100",
+          "thresholds": "0,100",
           "title": "",
           "transparent": true,
           "type": "singlestat",
@@ -187,11 +188,11 @@
         },
         {
           "cacheTimeout": null,
-          "colorBackground": true,
-          "colorValue": false,
+          "colorBackground": false,
+          "colorValue": true,
           "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
+            "rgba(85, 85, 85, 0.9)",
+            "rgba(83, 83, 83, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
           "decimals": 2,
@@ -207,8 +208,8 @@
           "nullText": null,
           "postfix": "",
           "postfixFontSize": "50%",
-          "prefix": "HTTPS",
-          "prefixFontSize": "50%",
+          "prefix": "<div style=\"margin-bottom: 15px;\"> HTTPS Uptime </div>",
+          "prefixFontSize": "30%",
           "span": 3,
           "sparkline": {
             "fillColor": "rgba(31, 118, 189, 0.18)",
@@ -221,7 +222,7 @@
               "target": "scale($endpoint.$collector.network.https.ok_state, 100)"
             }
           ],
-          "thresholds": "0,99,100",
+          "thresholds": "0,100",
           "title": "",
           "transparent": true,
           "type": "singlestat",
@@ -241,7 +242,7 @@
     {
       "collapse": false,
       "editable": true,
-      "height": "100px",
+      "height": "200px",
       "panels": [
         {
           "aliasColors": {
@@ -401,7 +402,7 @@
           "error": false,
           "fill": 1,
           "grid": {
-            "leftLogBase": 1,
+            "leftLogBase": 10,
             "leftMax": null,
             "leftMin": 0,
             "rightLogBase": 1,
@@ -415,6 +416,7 @@
           "height": "150",
           "id": 7,
           "legend": {
+            "alignAsTable": false,
             "avg": false,
             "current": false,
             "max": false,
@@ -438,13 +440,13 @@
           "steppedLine": false,
           "targets": [
             {
-              "target": "alias(sumSeries($endpoint.$collector.network.http.ok_state), 'ok')"
+              "target": "alias(consolidateBy(sumSeries($endpoint.$collector.network.http.error_state), 'sum'), 'error')"
             },
             {
-              "target": "alias(sumSeries($endpoint.$collector.network.http.warn_state), 'warn')"
+              "target": "alias(consolidateBy(sumSeries($endpoint.$collector.network.http.warn_state), 'sum'), 'warn')"
             },
             {
-              "target": "alias(sumSeries($endpoint.$collector.network.http.error_state), 'error')"
+              "target": "alias(consolidateBy(sumSeries($endpoint.$collector.network.http.ok_state), 'sum'), 'ok')"
             }
           ],
           "timeFrom": null,
@@ -814,7 +816,7 @@
       "collapse": false,
       "enable": true,
       "notice": false,
-      "now": false,
+      "now": true,
       "nowDelay": "",
       "refresh_intervals": [
         "5s",
@@ -844,20 +846,105 @@
     }
   ],
   "time": {
-    "from": "now-1h",
+    "from": "now-7d",
     "to": "now"
   },
   "templating": {
     "list": [
       {
         "allFormat": "glob",
+        "current": {
+          "text": "www_ebay_com",
+          "value": "www_ebay_com"
+        },
         "datasource": null,
         "includeAll": false,
         "label": "Endpoint(s)",
         "multi": false,
         "multiFormat": "glob",
         "name": "endpoint",
-        "options": [],
+        "options": [
+          {
+            "text": "apple_com",
+            "value": "apple_com"
+          },
+          {
+            "text": "link_nyc",
+            "value": "link_nyc"
+          },
+          {
+            "text": "singaporeair_com",
+            "value": "singaporeair_com"
+          },
+          {
+            "text": "snapshot_raintank_io",
+            "value": "snapshot_raintank_io"
+          },
+          {
+            "text": "www_cisco_com",
+            "value": "www_cisco_com"
+          },
+          {
+            "text": "www_cnn_com",
+            "value": "www_cnn_com"
+          },
+          {
+            "text": "www_ebay_com",
+            "value": "www_ebay_com"
+          },
+          {
+            "text": "www_facebook_com",
+            "value": "www_facebook_com"
+          },
+          {
+            "text": "www_google_com",
+            "value": "www_google_com"
+          },
+          {
+            "text": "www_imgur_com",
+            "value": "www_imgur_com"
+          },
+          {
+            "text": "www_netflix_com",
+            "value": "www_netflix_com"
+          },
+          {
+            "text": "www_nsone_net",
+            "value": "www_nsone_net"
+          },
+          {
+            "text": "www_packet_net",
+            "value": "www_packet_net"
+          },
+          {
+            "text": "www_raintank_io",
+            "value": "www_raintank_io"
+          },
+          {
+            "text": "www_reddit_com",
+            "value": "www_reddit_com"
+          },
+          {
+            "text": "www_seaportcapital_com",
+            "value": "www_seaportcapital_com"
+          },
+          {
+            "text": "www_techcrunch_com",
+            "value": "www_techcrunch_com"
+          },
+          {
+            "text": "www_whitehouse_gov",
+            "value": "www_whitehouse_gov"
+          },
+          {
+            "text": "www_wikipedia_org",
+            "value": "www_wikipedia_org"
+          },
+          {
+            "text": "www_yahoo_com",
+            "value": "www_yahoo_com"
+          }
+        ],
         "query": "*",
         "refresh": true,
         "refresh_on_load": true,
@@ -865,6 +952,10 @@
       },
       {
         "allFormat": "glob",
+        "current": {
+          "text": "All",
+          "value": "{amsterdam,frankfurt,london,new-jersey,new-york,paris,san-francisco,seattle,singapore}"
+        },
         "datasource": null,
         "includeAll": true,
         "label": "Collector(s)",
@@ -874,7 +965,43 @@
         "options": [
           {
             "text": "All",
-            "value": "{}"
+            "value": "{amsterdam,frankfurt,london,new-jersey,new-york,paris,san-francisco,seattle,singapore}"
+          },
+          {
+            "text": "amsterdam",
+            "value": "amsterdam"
+          },
+          {
+            "text": "frankfurt",
+            "value": "frankfurt"
+          },
+          {
+            "text": "london",
+            "value": "london"
+          },
+          {
+            "text": "new-jersey",
+            "value": "new-jersey"
+          },
+          {
+            "text": "new-york",
+            "value": "new-york"
+          },
+          {
+            "text": "paris",
+            "value": "paris"
+          },
+          {
+            "text": "san-francisco",
+            "value": "san-francisco"
+          },
+          {
+            "text": "seattle",
+            "value": "seattle"
+          },
+          {
+            "text": "singapore",
+            "value": "singapore"
           }
         ],
         "query": "*.*",
@@ -889,5 +1016,5 @@
   },
   "refresh": false,
   "schemaVersion": 6,
-  "version": 1
+  "version": 8
 }
