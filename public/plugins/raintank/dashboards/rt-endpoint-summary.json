@@ -34,7 +34,7 @@
     {
       "collapse": false,
       "editable": true,
-      "height": "25px",
+      "height": "50px",
       "panels": [
         {
           "cacheTimeout": null,
@@ -43,7 +43,7 @@
           "colors": [
             "rgba(120, 120, 120, 0.9)",
             "rgba(92, 92, 92, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+            "rgba(27, 96, 24, 0.97)"
           ],
           "decimals": 2,
           "editable": true,
@@ -58,7 +58,7 @@
           "nullText": null,
           "postfix": "",
           "postfixFontSize": "50%",
-          "prefix": "<div style=\"margin-bottom: 15px;\"> DNS Uptime </div>",
+          "prefix": "",
           "prefixFontSize": "30%",
           "span": 3,
           "sparkline": {
@@ -73,7 +73,7 @@
             }
           ],
           "thresholds": "0,0,100",
-          "title": "",
+          "title": "DNS Uptime",
           "transparent": true,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -108,7 +108,7 @@
           "nullText": null,
           "postfix": "",
           "postfixFontSize": "50%",
-          "prefix": "<div style=\"margin-bottom: 15px;\"> Ping Uptime </div>",
+          "prefix": "",
           "prefixFontSize": "30%",
           "span": 3,
           "sparkline": {
@@ -123,7 +123,7 @@
             }
           ],
           "thresholds": "0,100",
-          "title": "",
+          "title": "Ping Uptime",
           "transparent": true,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -158,7 +158,7 @@
           "nullText": null,
           "postfix": "",
           "postfixFontSize": "50%",
-          "prefix": "<div style=\"margin-bottom: 15px;\"> HTTP Uptime </div>",
+          "prefix": "",
           "prefixFontSize": "30%",
           "span": 3,
           "sparkline": {
@@ -173,7 +173,7 @@
             }
           ],
           "thresholds": "0,100",
-          "title": "",
+          "title": "HTTP Uptime",
           "transparent": true,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -208,7 +208,7 @@
           "nullText": null,
           "postfix": "",
           "postfixFontSize": "50%",
-          "prefix": "<div style=\"margin-bottom: 15px;\"> HTTPS Uptime </div>",
+          "prefix": "",
           "prefixFontSize": "30%",
           "span": 3,
           "sparkline": {
@@ -223,7 +223,7 @@
             }
           ],
           "thresholds": "0,100",
-          "title": "",
+          "title": "HTTPS Uptime",
           "transparent": true,
           "type": "singlestat",
           "valueFontSize": "80%",
@@ -242,7 +242,7 @@
     {
       "collapse": false,
       "editable": true,
-      "height": "200px",
+      "height": "100px",
       "panels": [
         {
           "aliasColors": {
@@ -266,21 +266,21 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
-          "height": "150",
+          "height": "",
           "id": 6,
           "legend": {
             "avg": false,
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
           "lines": false,
           "linewidth": 2,
           "links": [],
-          "maxDataPoints": "60",
+          "maxDataPoints": "40",
           "nullPointMode": "connected",
           "percentage": true,
           "pointradius": 5,
@@ -340,21 +340,21 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
-          "height": "150",
+          "height": "",
           "id": 5,
           "legend": {
             "avg": false,
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
           "lines": false,
           "linewidth": 2,
           "links": [],
-          "maxDataPoints": "60",
+          "maxDataPoints": "40",
           "nullPointMode": "connected",
           "percentage": true,
           "pointradius": 5,
@@ -413,7 +413,7 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
-          "height": "150",
+          "height": "",
           "id": 7,
           "legend": {
             "alignAsTable": false,
@@ -421,14 +421,14 @@
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
           "lines": false,
           "linewidth": 2,
           "links": [],
-          "maxDataPoints": "60",
+          "maxDataPoints": "40",
           "nullPointMode": "connected",
           "percentage": true,
           "pointradius": 5,
@@ -487,21 +487,21 @@
             "threshold2": null,
             "threshold2Color": "rgba(234, 112, 112, 0.22)"
           },
-          "height": "150",
+          "height": "",
           "id": 8,
           "legend": {
             "avg": false,
             "current": false,
             "max": false,
             "min": false,
-            "show": true,
+            "show": false,
             "total": false,
             "values": false
           },
           "lines": false,
           "linewidth": 2,
           "links": [],
-          "maxDataPoints": "60",
+          "maxDataPoints": "40",
           "nullPointMode": "connected",
           "percentage": true,
           "pointradius": 5,
@@ -582,7 +582,7 @@
           "lines": false,
           "linewidth": 2,
           "links": [],
-          "maxDataPoints": "100",
+          "maxDataPoints": "",
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 2,
@@ -647,7 +647,7 @@
           "lines": false,
           "linewidth": 2,
           "links": [],
-          "maxDataPoints": "100",
+          "maxDataPoints": "",
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 2,
@@ -712,7 +712,7 @@
           "lines": false,
           "linewidth": 2,
           "links": [],
-          "maxDataPoints": "100",
+          "maxDataPoints": "",
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 2,
@@ -777,7 +777,7 @@
           "lines": false,
           "linewidth": 2,
           "links": [],
-          "maxDataPoints": "100",
+          "maxDataPoints": "",
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 2,
@@ -846,7 +846,7 @@
     }
   ],
   "time": {
-    "from": "now-7d",
+    "from": "now-1h",
     "to": "now"
   },
   "templating": {
@@ -1016,5 +1016,5 @@
   },
   "refresh": false,
   "schemaVersion": 6,
-  "version": 8
+  "version": 16
 }
