@@ -1,7 +1,7 @@
 {
-  "id": 21,
-  "title": "rt-endpoint-summary Copy",
-  "originalTitle": "rt-endpoint-summary Copy",
+  "id": null,
+  "title": "rt-endpoint-summary",
+  "originalTitle": "rt-endpoint-summary",
   "tags": [],
   "style": "dark",
   "timezone": "browser",
@@ -41,9 +41,9 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgba(120, 120, 120, 0.9)",
-            "rgba(92, 92, 92, 0.89)",
-            "rgba(27, 96, 24, 0.97)"
+            "rgba(139, 139, 139, 1)",
+            "rgba(139, 139, 139, 1)",
+            "rgba(63, 104, 51, 1)"
           ],
           "decimals": 2,
           "editable": true,
@@ -91,9 +91,9 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgba(96, 96, 96, 0.9)",
-            "rgba(94, 94, 94, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+            "rgba(139, 139, 139, 1)",
+            "rgba(139, 139, 139, 1)",
+            "rgba(63, 104, 51, 1)"
           ],
           "decimals": 2,
           "editable": true,
@@ -141,9 +141,9 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgba(83, 83, 83, 0.9)",
-            "rgba(81, 81, 81, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+            "rgba(139, 139, 139, 1)",
+            "rgba(139, 139, 139, 1)",
+            "rgba(63, 104, 51, 1)"
           ],
           "decimals": 2,
           "editable": true,
@@ -191,9 +191,9 @@
           "colorBackground": false,
           "colorValue": true,
           "colors": [
-            "rgba(85, 85, 85, 0.9)",
-            "rgba(83, 83, 83, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
+            "rgba(139, 139, 139, 1)",
+            "rgba(139, 139, 139, 1)",
+            "rgba(63, 104, 51, 1)"
           ],
           "decimals": 2,
           "editable": true,
@@ -246,7 +246,7 @@
       "panels": [
         {
           "aliasColors": {
-            "error": "#BF1B00",
+            "error": "#E24D42",
             "ok": "#508642"
           },
           "bars": true,
@@ -320,7 +320,7 @@
         },
         {
           "aliasColors": {
-            "error": "#BF1B00",
+            "error": "#E24D42",
             "ok": "#508642"
           },
           "bars": true,
@@ -393,7 +393,7 @@
         },
         {
           "aliasColors": {
-            "error": "#BF1B00",
+            "error": "#E24D42",
             "ok": "#508642"
           },
           "bars": true,
@@ -467,7 +467,7 @@
         },
         {
           "aliasColors": {
-            "error": "#BF1B00",
+            "error": "#E24D42",
             "ok": "#508642"
           },
           "bars": true,
@@ -1016,5 +1016,6 @@
   },
   "refresh": false,
   "schemaVersion": 6,
-  "version": 16
+  "version": 16,
+  "links": []
 }
