@@ -46,16 +46,17 @@ type CollectorSession struct {
 // ----------------------
 // DTO
 type CollectorDTO struct {
-	Id        int64    `json:"id"`
-	OrgId     int64    `json:"org_id"`
-	Slug      string   `json:"slug"`
-	Name      string   `json:"name"`
-	Tags      []string `json:"tags"`
-	Public    bool     `json:"public"`
-	Latitude  float64  `json:"latitude"`
-	Longitude float64  `json:"longitude"`
-	Online    bool     `json:"online"`
-	Enabled   bool     `json:"enabled"`
+	Id        int64     `json:"id"`
+	OrgId     int64     `json:"org_id"`
+	Slug      string    `json:"slug"`
+	Name      string    `json:"name"`
+	Tags      []string  `json:"tags"`
+	Public    bool      `json:"public"`
+	Latitude  float64   `json:"latitude"`
+	Longitude float64   `json:"longitude"`
+	Online    bool      `json:"online"`
+	Enabled   bool      `json:"enabled"`
+	Updated   time.Time `json:"updated"`
 }
 
 // ----------------------

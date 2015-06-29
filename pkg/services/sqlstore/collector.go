@@ -84,6 +84,7 @@ func GetCollectorById(query *m.GetCollectorByIdQuery) error {
 		Public:    result.Public,
 		Online:    result.Online,
 		Enabled:   result.Enabled,
+		Updated:   result.Updated,
 	}
 
 	return err
@@ -131,6 +132,7 @@ func GetCollectorByName(query *m.GetCollectorByNameQuery) error {
 		Public:    result.Public,
 		Online:    result.Online,
 		Enabled:   result.Enabled,
+		Updated:   result.Updated,
 	}
 
 	return err
@@ -210,6 +212,7 @@ func GetCollectors(query *m.GetCollectorsQuery) error {
 			Public:    row.Public,
 			Online:    row.Online,
 			Enabled:   row.Enabled,
+			Updated:   row.Updated,
 		}
 	}
 
@@ -291,6 +294,7 @@ func AddCollector(cmd *m.AddCollectorCommand) error {
 			Public:    l.Public,
 			Online:    l.Online,
 			Enabled:   l.Enabled,
+			Updated:   l.Updated,
 		}
 		return nil
 	})
@@ -470,7 +474,7 @@ func AddCollectorSession(cmd *m.AddCollectorSessionCommand) error {
 		if _, err := sess.Insert(&collectorSess); err != nil {
 			return err
 		}
-		rawSql := "UPDATE collector set online=1 where id=?"
+		rawSql := "UPDATE collector set online=1, updated=NOW() where id=?"
 		if _, err := sess.Exec(rawSql, cmd.CollectorId); err != nil {
 			return err
 		}
@@ -517,7 +521,7 @@ func DeleteCollectorSession(cmd *m.DeleteCollectorSessionCommand) error {
 			return err
 		}
 		if len(q.Result) < 1 {
-			rawSql := "UPDATE collector set online=0 where id=?"
+			rawSql := "UPDATE collector set online=0, updated=NOW() where id=?"
 			if _, err := sess.Exec(rawSql, cmd.CollectorId); err != nil {
 				return err
 			}
