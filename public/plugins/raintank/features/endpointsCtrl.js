@@ -81,7 +81,13 @@ function (angular, _) {
       });
     };
     $scope.isEndPointReady = function(endpoint) {
-      return endpoint && endpoint.hasOwnProperty('ready') &&  endpoint.ready;
+      _.filter( $scope.endpoints, function( currentEndPoint ) {
+        if ( currentEndPoint === endpoint) {
+          return  currentEndPoint.hasOwnProperty('monitorReadys') && currentEndPoint.monitorReadys[type];
+        } else{
+          return undefined;
+        }
+      });
     };
 
     $scope.getEndpoints = function() {
@@ -90,15 +96,19 @@ function (angular, _) {
         _.forEach(endpoints, function(endpoint) {
           endpoint.states = [];
           endpoint.monitors = {};
+          endpoint.monitorReadys = endpoint.monitorReadys || [];
           endpoint.ready = false;
           backendSrv.get('/api/monitors', {"endpoint_id": endpoint.id}).then(function(monitors) {
-            var seenStates = {};
+            var seenStates = {},
+                monitorLabel;
             _.forEach(monitors, function(mon) {
               if (!mon.enabled) {
                 return;
               }
               seenStates[mon.state] = true;
-              endpoint.monitors[$scope.monitor_types[mon.monitor_type_id].name.toLowerCase()] = mon;
+              monitorLabel = $scope.monitor_types[mon.monitor_type_id].name.toLowerCase();
+              endpoint.monitors[ monitorLabel ] = mon;
+              endpoint.monitorReadys = monitorLabel;
             });
             for (var s in seenStates) {
               $scope.endpointState[s]++;
