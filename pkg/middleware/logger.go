@@ -39,7 +39,7 @@ func Logger() macaron.Handler {
 		rw := res.(macaron.ResponseWriter)
 		c.Next()
 
-		content := fmt.Sprintf("Completed %s %v %s in %v", req.URL.Path, rw.Status(), http.StatusText(rw.Status()), time.Since(start))
+		content := fmt.Sprintf("Completed %s %v %s in %.3f milliseconds", req.URL.Path, rw.Status(), http.StatusText(rw.Status()), float64(time.Since(start))/float64(time.Millisecond))
 		if !isWindows {
 			switch rw.Status() {
 			case 200:
