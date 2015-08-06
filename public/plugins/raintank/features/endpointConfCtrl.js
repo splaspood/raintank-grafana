@@ -11,8 +11,6 @@ function (angular, _) {
       $scope, $q, $modal, $location, $timeout, $anchorScroll,
       $routeParams, $http, $window, backendSrv, alertSrv) {
 
-    $scope.pageReady = false;
-
     var monitorLastState = {};
     var freqOpt = [10, 30, 60, 120];
 
@@ -82,6 +80,9 @@ function (angular, _) {
           break;
         case "https":
           $scope.showHTTPS = true;
+          break;
+        case "sitespeed":
+          $scope.showSitespeed = true;
           break;
         }
       }
@@ -198,6 +199,7 @@ function (angular, _) {
           }
         };
       }
+
     };
 
     $scope.defaultSettingByVariable = function(monitorType, variable) {
